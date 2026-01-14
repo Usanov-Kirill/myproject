@@ -1,4 +1,7 @@
-from utils import greet
+import requests
 
-if __name__ == "__main__":
-    print(greet("fvghjdkl;"))
+r = requests.get("https://api.adviceslip.com/advice", timeout=5) 
+r.raise_for_status()        
+data = r.json()    
+print(data["slip"]["advice"])   
+
