@@ -3,17 +3,38 @@ from myproject.utils import json_to_dict_list
 import os
 from pathlib import Path
 
-app = FastAPI()
+app = FastAPI(
+    title="Scholl",
+    description="Тестовое API для занятия, небольшая база студентов.",
+    version="1.0",
+    contact={"name": "Kirill", "email": "kirill.a.usanov#gmail.com"},
+    license_info={"name": "MIT", "url": "https://opensource.org/licenses/MIT"},
+)
 
-DATA = Path(__file__).resolve().parents[1] /"data"/"students.json"
+DATA = Path(__file__).resolve().parents[1] / "data" / "students.json"
+
+app.openapi_tags = [
+    {"name": "hello", "description": "Приветсвие, начальная страница"},
+    {"name": "students", "description": "Эндпоинты по студентам"},
+]
 
 
-@app.get("/")
+@app.get(
+    "/",
+    tags=["hello"],
+    summary="Приветствие",
+    description="Начальная страница",
+)
 def home_page():
     return {"message": "Привет, Мир!"}
 
 
-@app.get("/students")
+@app.get(
+    "/students",
+    tags=["students"],
+    summary="Список студентов",
+    description="Вернёт всех учеников",
+)
 def get_all_students():
     try:
         return json_to_dict_list(DATA)
@@ -22,7 +43,12 @@ def get_all_students():
         raise HTTPException(500, "students.json not found")
 
 
-@app.get("/students/{grade}")
+@app.get(
+    "/students/{grade}",
+    tags=["students"],
+    summary="Список студентов с фильтром по классу",
+    description="Вернёт всех учеников в соответствии с параметром класса",
+)
 def get_stud_grade(grade: int):
     students = json_to_dict_list(DATA)
     if grade is not None:
