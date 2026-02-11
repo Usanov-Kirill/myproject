@@ -1,2 +1,2 @@
 # myproject
-TODO 1 efuuijgk 2 jgikowpfi 3 jkfl;wf
+proect.py - пока консольная версия без сервера, переводчик с другого языка на английский через запросы на google translater.

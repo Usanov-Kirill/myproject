@@ -14,14 +14,14 @@ app = FastAPI(
 DATA = Path(__file__).resolve().parents[1] / "data" / "students.json"
 
 app.openapi_tags = [
-    {"name": "hello", "description": "Приветсвие, начальная страница"},
+    {"name": "home", "description": "Приветсвие, начальная страница"},
     {"name": "students", "description": "Эндпоинты по студентам"},
 ]
 
 
 @app.get(
     "/",
-    tags=["hello"],
+    tags=["home"],
     summary="Приветствие",
     description="Начальная страница",
 )
